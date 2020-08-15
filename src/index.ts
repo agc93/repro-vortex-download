@@ -3,10 +3,6 @@ import { IExtensionContext, IExtensionApi } from 'vortex-api/lib/types/api';
 
 //This is the main function Vortex will run when detecting the game extension. 
 function main(context: IExtensionContext) {
-    context.once(() => {
-        log('debug', 'initialising your new extension!')
-    });
-
     context.registerAction('global-icons', 200, 'dashboard', {}, 'Test Download',
         () => { 
             context.api.showDialog('question', 'Test Download Failures', {
@@ -21,6 +17,7 @@ function main(context: IExtensionContext) {
 }
 
 function runDownload(api: IExtensionApi, url: string) {
+    log('info', 'emitting download event for testing URL', {url});
     api.events.emit('start-download', [url], {}, null, (err, id) => {
         if (err) {
             log('error', 'download failed', {err});
